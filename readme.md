@@ -1,3 +1,6 @@
+# Note:
+This project is a continuation of:
+https://github.com/sbycrosz/react-native-input-credit-card
 
 # React Native Credit Card Input
 Easy (and good looking) credit-card input for your React Native Project 💳 💳
@@ -17,7 +20,21 @@ Code:
 <LiteCreditCardInput onChange={this._onChange} />
 ```
 
+# 2020 Features
+* Input fields in vertical orientation on CreditCardInput using prop: ```js verticalScroll{true}```.
 
+# Usage
+
+```bash
+npm i --save https://github.com/jossydeleon/react-native-credit-card-input.git
+```
+
+# ToDo
+* Move to React functional components with React hooks to improve performance
+
+
+
+# ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- 
 # Features
 * Skeuomorphic credit-card 💳 (inspired by: [card](https://jessepollak.github.io/card/), [react-native-credit-card](https://github.com/sonnylazuardi/react-native-credit-card))
 * **!!NEW!!** Now you could scale the Credit Card for smaller screens
@@ -30,7 +47,7 @@ Code:
 # Usage
 
 ```bash
-npm i --save react-native-credit-card-input
+npm i --save https://github.com/jossydeleon/react-native-credit-card-input.git
 ```
 
 then add these lines in your react-native codebase
