@@ -23,7 +23,7 @@ const s = StyleSheet.create({
     marginTop: 20,
   },
   inputContainer: {
-    marginLeft: 20,
+    marginTop:20,
   },
   inputLabel: {
     fontWeight: "bold",
@@ -65,6 +65,7 @@ export default class CreditCardInput extends Component {
     allowScroll: PropTypes.bool,
 
     additionalInputsProps: PropTypes.objectOf(PropTypes.shape(TextInput.propTypes)),
+    verticalScroll: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -95,10 +96,10 @@ export default class CreditCardInput extends Component {
   };
 
   componentDidMount = () => this._focus(this.props.focused);
-
-  componentWillReceiveProps = newProps => {
-    if (this.props.focused !== newProps.focused) this._focus(newProps.focused);
-  };
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.focused !== this.props.focused) this._focus(this.props.focused);
+  }
 
   _focus = field => {
     if (!field) return;
@@ -144,7 +145,7 @@ export default class CreditCardInput extends Component {
       cardImageFront, cardImageBack, inputContainerStyle,
       values: { number, expiry, cvc, name, type }, focused,
       allowScroll, requiresName, requiresCVC, requiresPostalCode,
-      cardScale, cardFontFamily, cardBrandIcons,
+      cardScale, cardFontFamily, cardBrandIcons, verticalScroll
     } = this.props;
 
     return (
@@ -161,7 +162,7 @@ export default class CreditCardInput extends Component {
           expiry={expiry}
           cvc={cvc} />
         <ScrollView ref="Form"
-          horizontal
+          horizontal={!verticalScroll}
           keyboardShouldPersistTaps="always"
           scrollEnabled={allowScroll}
           showsHorizontalScrollIndicator={false}
