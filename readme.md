@@ -22,6 +22,7 @@ Code:
 
 # 2020 Features
 * Input fields in vertical orientation on CreditCardInput using prop: ```js verticalScroll{true}```.
+* Hide labels on inputs using prop: ```js hideLabels{true}```
 
 # Usage
 
@@ -124,6 +125,8 @@ LiteCreditCardInput does not support `requiresName`, `requiresCVC`, and `require
 |cardFontFamily | PropTypes.string | Font family for the CreditCardView, works best with monospace fonts. Defaults to Courier (iOS) or monospace (android) |
 |cardImageFront | PropTypes.number | Image for the credit-card view `e.g. require("./card.png")` |
 |cardImageBack | PropTypes.number | Image for the credit-card view `e.g. require("./card.png")` |
+|verticalScroll | PropTypes.bool | Show form in vertical orientation |
+|hideLabels | PropTypes.bool | Hide/Show input labels |
 |labelStyle | Text.propTypes.style | Style for credit-card form's labels |
 |inputStyle | Text.propTypes.style | Style for credit-card form's textInput |
 |inputContainerStyle | ViewPropTypes.style | Style for textInput's container<br/> Defaults to: `{ borderBottomWidth: 1, borderBottomColor: "black" }` |
