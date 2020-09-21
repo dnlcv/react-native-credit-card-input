@@ -119,8 +119,6 @@ export default class CreditCardInput extends Component {
   _focus = field => {
     if (!field) return;
 
-    console.log(field);
-
     if(field === 'number') {
       this.mNumber.current.focus();
     }
