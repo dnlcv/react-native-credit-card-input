@@ -23,7 +23,7 @@ const s = StyleSheet.create({
     marginTop: 20,
   },
   inputContainer: {
-    marginTop:20,
+    marginTop:15,
   },
   inputLabel: {
     fontWeight: "bold",
@@ -45,6 +45,7 @@ const POSTAL_CODE_INPUT_WIDTH = 120;
 export default class CreditCardInput extends Component {
   static propTypes = {
     ...InjectedProps,
+    hideLabels: PropTypes.bool,
     labels: PropTypes.object,
     placeholders: PropTypes.object,
 
@@ -70,6 +71,7 @@ export default class CreditCardInput extends Component {
 
   static defaultProps = {
     cardViewSize: {},
+    hideLabels:false,
     labels: {
       name: "CARDHOLDER'S NAME",
       number: "CARD NUMBER",
@@ -96,7 +98,7 @@ export default class CreditCardInput extends Component {
   };
 
   componentDidMount = () => this._focus(this.props.focused);
-  
+
   componentDidUpdate(prevProps) {
     if (prevProps.focused !== this.props.focused) this._focus(this.props.focused);
   }
@@ -145,7 +147,7 @@ export default class CreditCardInput extends Component {
       cardImageFront, cardImageBack, inputContainerStyle,
       values: { number, expiry, cvc, name, type }, focused,
       allowScroll, requiresName, requiresCVC, requiresPostalCode,
-      cardScale, cardFontFamily, cardBrandIcons, verticalScroll
+      cardScale, cardFontFamily, cardBrandIcons, verticalScroll, hideLabels
     } = this.props;
 
     return (
@@ -168,20 +170,25 @@ export default class CreditCardInput extends Component {
           showsHorizontalScrollIndicator={false}
           style={s.form}>
           <CCInput {...this._inputProps("number")}
+            hideLabels={hideLabels}
             keyboardType="numeric"
             containerStyle={[s.inputContainer, inputContainerStyle, { width: CARD_NUMBER_INPUT_WIDTH }]} />
           <CCInput {...this._inputProps("expiry")}
+            hideLabels={hideLabels}
             keyboardType="numeric"
             containerStyle={[s.inputContainer, inputContainerStyle, { width: EXPIRY_INPUT_WIDTH }]} />
           { requiresCVC &&
             <CCInput {...this._inputProps("cvc")}
+            hideLabels={hideLabels}
               keyboardType="numeric"
               containerStyle={[s.inputContainer, inputContainerStyle, { width: CVC_INPUT_WIDTH }]} /> }
           { requiresName &&
             <CCInput {...this._inputProps("name")}
+              hideLabels={hideLabels}
               containerStyle={[s.inputContainer, inputContainerStyle, { width: NAME_INPUT_WIDTH }]} /> }
           { requiresPostalCode &&
             <CCInput {...this._inputProps("postalCode")}
+              hideLabels={hideLabels}
               keyboardType="numeric"
               containerStyle={[s.inputContainer, inputContainerStyle, { width: POSTAL_CODE_INPUT_WIDTH }]} /> }
         </ScrollView>
