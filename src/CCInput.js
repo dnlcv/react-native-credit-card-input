@@ -15,87 +15,88 @@ const s = StyleSheet.create({
   },
 });
 
-export default class CCInput extends Component {
-  static propTypes = {
-    field: PropTypes.string.isRequired,
-    label: PropTypes.string,
-    value: PropTypes.string,
-    placeholder: PropTypes.string,
-    keyboardType: PropTypes.string,
+  class CCInput extends Component {
 
-    status: PropTypes.oneOf(["valid", "invalid", "incomplete"]),
+    static propTypes = {
+      field: PropTypes.string.isRequired,
+      label: PropTypes.string,
+      value: PropTypes.string,
+      placeholder: PropTypes.string,
+      keyboardType: PropTypes.string,
 
-    containerStyle: ViewPropTypes.style,
-    inputStyle: Text.propTypes.style,
-    labelStyle: Text.propTypes.style,
-    validColor: PropTypes.string,
-    invalidColor: PropTypes.string,
-    placeholderColor: PropTypes.string,
+      status: PropTypes.oneOf(["valid", "invalid", "incomplete"]),
 
-    onFocus: PropTypes.func,
-    onChange: PropTypes.func,
-    onBecomeEmpty: PropTypes.func,
-    onBecomeValid: PropTypes.func,
-    additionalInputProps: PropTypes.shape(TextInput.propTypes),
-  };
+      containerStyle: ViewPropTypes.style,
+      inputStyle: Text.propTypes.style,
+      labelStyle: Text.propTypes.style,
+      validColor: PropTypes.string,
+      invalidColor: PropTypes.string,
+      placeholderColor: PropTypes.string,
 
-  static defaultProps = {
-    label: "",
-    value: "",
-    status: "incomplete",
-    containerStyle: {},
-    inputStyle: {},
-    labelStyle: {},
-    onFocus: () => {},
-    onChange: () => {},
-    onBecomeEmpty: () => {},
-    onBecomeValid: () => {},
-    additionalInputProps: {},
-  };
+      onFocus: PropTypes.func,
+      onChange: PropTypes.func,
+      onBecomeEmpty: PropTypes.func,
+      onBecomeValid: PropTypes.func,
+      additionalInputProps: PropTypes.shape(TextInput.propTypes),
+    };
 
-  componentDidUpdate = prevProps => {
-    const { status, value, onBecomeEmpty, onBecomeValid, field } = prevProps;
-    const { status: newStatus, value: newValue } = this.props;
+    static defaultProps = {
+      label: "",
+      value: "",
+      status: "incomplete",
+      containerStyle: {},
+      inputStyle: {},
+      labelStyle: {},
+      onFocus: () => {},
+      onChange: () => {},
+      onBecomeEmpty: () => {},
+      onBecomeValid: () => {},
+      additionalInputProps: {},
+    };
 
-    if (value !== "" && newValue === "") onBecomeEmpty(field);
-    if (status !== "valid" && newStatus === "valid") onBecomeValid(field);
-  };
+    componentDidUpdate = prevProps => {
+      const { status, value, onBecomeEmpty, onBecomeValid, field } = prevProps;
+      const { status: newStatus, value: newValue } = this.props;
+      if (value !== "" && newValue === "") onBecomeEmpty(field);
+      if (status !== "valid" && newStatus === "valid") onBecomeValid(field);
+    };
 
-  focus = () => this.refs.input.focus();
+    _onFocus = () => this.props.onFocus(this.props.field);
+    _onChange = value => this.props.onChange(this.props.field, value);
 
-  _onFocus = () => this.props.onFocus(this.props.field);
-  _onChange = value => this.props.onChange(this.props.field, value);
 
-  render() {
-    const { label, value, placeholder, status, keyboardType,
-            containerStyle, inputStyle, labelStyle,
-            validColor, invalidColor, placeholderColor,
-            additionalInputProps, hideLabels } = this.props;
-    return (
-      <TouchableOpacity onPress={this.focus}
-        activeOpacity={0.99}>
-        <View style={[containerStyle]}>
-          { !hideLabels && (!!label && <Text style={[labelStyle]}>{label}</Text>)}
-          <TextInput ref="input"
-            {...additionalInputProps}
-            keyboardType={keyboardType}
-            autoCapitalise="words"
-            autoCorrect={false}
-            style={[
-              s.baseInputStyle,
-              inputStyle,
-              ((validColor && status === "valid") ? { color: validColor } :
-              (invalidColor && status === "invalid") ? { color: invalidColor } :
-              {}),
-            ]}
-            underlineColorAndroid={"transparent"}
-            placeholderTextColor={placeholderColor}
-            placeholder={placeholder}
-            value={value}
-            onFocus={this._onFocus}
-            onChangeText={this._onChange} />
-        </View>
-      </TouchableOpacity>
-    );
+    render() {
+      const { label, value, placeholder, status, keyboardType,
+              containerStyle, inputStyle, labelStyle,
+              validColor, invalidColor, placeholderColor,
+              additionalInputProps, hideLabels } = this.props;
+      return (
+        <TouchableOpacity
+          activeOpacity={0.99}>
+          <View style={[containerStyle]}>
+            { !hideLabels && (!!label && <Text style={[labelStyle]}>{label}</Text>)}
+            <TextInput ref={this.props.innerRef}
+              {...additionalInputProps}
+              keyboardType={keyboardType}
+              autoCapitalize="words"
+              autoCorrect={false}
+              style={[
+                s.baseInputStyle,
+                inputStyle,
+                ((validColor && status === "valid") ? { color: validColor } :
+                (invalidColor && status === "invalid") ? { color: invalidColor } :
+                {}),
+              ]}
+              underlineColorAndroid={"transparent"}
+              placeholderTextColor={placeholderColor}
+              placeholder={placeholder}
+              value={value}
+              onFocus={this._onFocus}
+              onChangeText={this._onChange} />
+          </View>
+        </TouchableOpacity>
+      );
+    }
   }
-}
+
+export default React.forwardRef((props, ref) => <CCInput innerRef={ref} {...props} />);
