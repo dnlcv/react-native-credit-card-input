@@ -1,50 +1,60 @@
-import React, { useRef } from 'react';
-import { Image, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { useRef } from "react";
+import { Image, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 
 const IconCard = ({ type, iconStyle }) => {
 
-  const icon = useRef();
-  const typeCard = type.toLowerCase().replace(" ","-");
+  const willMount = useRef(true);
+  const setCard = useRef();
 
-  switch(typeCard) {
-    case 'visa':
-      icon = require("./icons/stp_card_visa.png");
-      break;
-    case 'american-express':
-      icon = require("./icons/stp_card_amex.png");
-      break;
-    case 'jcb':
-      icon = require("./icons/stp_card_jcb.png");
-      break;
-    case 'mastercard':
-      icon = require("./icons/stp_card_mastercard.png");
-      break;
-    case 'discover':
-      icon = require("./icons/stp_card_discover.png");
-      break;
-    case 'diners-club':
-      icon = require("./icons/stp_card_diners.png");
-      break;
-    case 'unionpay':
-      icon = require("./icons/stp_card_unknown.png");
-      break;
-    default:
+  const selectIconCard = () => {
+    const typeCard = type.toLowerCase().replace(" ", "-");
+
+    switch (typeCard) {
+      case "visa":
+        setCard.current = require("./icons/stp_card_visa.png");
+        break;
+      case "american-express":
+        setCard.current = require("./icons/stp_card_amex.png");
+        break;
+      case "jcb":
+        setCard.current = require("./icons/stp_card_jcb.png");
+        break;
+      case "mastercard":
+        setCard.current = require("./icons/stp_card_mastercard.png");
+        break;
+      case "discover":
+        setCard.current = require("./icons/stp_card_discover.png");
+        break;
+      case "diners-club":
+        setCard.current = require("./icons/stp_card_diners.png");
+        break;
+      case "unionpay":
+        setCard.current = require("./icons/stp_card_unknown.png");
+        break;
+      default:
+    }
+  };
+
+  //WillMount effect
+  if (willMount.current) {
+    //This runs only once before rendering the component
+    willMount.current = false;
+    //Choose icon card
+    selectIconCard();
   }
 
-  return (
-    <Image style={[styles.icon, iconStyle]} source={icon.current} />
-  )
-}
+  return <Image style={[styles.icon, iconStyle]} source={setCard.current} />;
+};
 
 const styles = StyleSheet.create({
   cardContainer: {},
   icon: {
     width: 60,
     height: 40,
-    resizeMode: "contain"
-  }
-})
+    resizeMode: "contain",
+  },
+});
 
 IconCard.propTypes = {
   icon: PropTypes.string,
