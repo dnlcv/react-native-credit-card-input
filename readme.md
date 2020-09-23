@@ -21,8 +21,18 @@ Code:
 ```
 
 # 2020 Features
-* Input fields in vertical orientation on CreditCardInput using prop: ```js verticalScroll{true}```.
-* Hide labels on inputs using prop: ```js hideLabels{true}```
+* Input fields in vertical orientation on CreditCardInput using prop: 
+```javascript 
+verticalScroll{true}
+```
+* Hide labels on inputs using prop: 
+```javascript
+hideLabels{true}
+```
+* Credit Cards Icon component: 
+```javascript 
+<IconCard type={"visa"} />
+```
 
 # Usage
 
