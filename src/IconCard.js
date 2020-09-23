@@ -50,8 +50,8 @@ const IconCard = ({ type, iconStyle }) => {
 const styles = StyleSheet.create({
   cardContainer: {},
   icon: {
-    width: 60,
-    height: 40,
+    width: 50,
+    height: 30,
     resizeMode: "contain",
   },
 });
